@@ -7,7 +7,7 @@ class Item:
         self.item_id = item_id
         item = fakedb[item_id]
         self.name = item['name']
-        self.recipe = item['recipe']
+        self.components = item['components']
         self.npc_price = item['npc_price']
 
     # Best price overall, [source, price(s)] in a recursive tree
@@ -20,10 +20,10 @@ class Item:
             possible_prices.append([self.item_id, 'AH', cheapest_auction['unit_price']])
 
         # Crafting price
-        if self.recipe:
+        if self.components:
             total = 0
             price_list = list()
-            for item_id, amount in self.recipe.items():
+            for item_id, amount in self.components.items():
                 item = Item(item_id)
                 item_price = item.price(auction_list)
                 price_list.append(item_price)
