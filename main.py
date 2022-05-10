@@ -1,6 +1,8 @@
 # import discord
 # from secrets import discord_bot_token
-
+from access import Access
+from item import Item
+from fakedb import fakedb
 
 # client = discord.Client()
 #
@@ -20,25 +22,34 @@
 # client.run(discord_bot_token)
 
 if __name__ == '__main__':
-
-
-
-    # from access import Access
-    # access = Access()
+    access = Access()
 
     # 1
     # Obtain AH prices
-    # auctions = access.get_auctions()
+    auctions = access.get_auctions()
 
     # 1.5
-    # print the AH lowest price
-    # from item import Item
+    # Find out which items are profitable to craft
+    items_to_craft = set()
+    for item_id, item_json in fakedb.items():
+        print(item_id)
+        print(item_json)
+        if item_json['components'] is None:
+            continue
+        print('lebork')
+        item_obj = Item(item_id)
+        price = item_obj.price(auctions)
+        if price[1] == 'CRA':
+            items_to_craft.add(item_obj)
 
-    from test import test_item
-    test_item()
+
+    print(items_to_craft)
+
+
 
     # 2
     # calculate the amount of ingredients that are below the "break even price'
+
 
     # 2.1 calculate the "break even price" (BEP)
 
