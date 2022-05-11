@@ -1,4 +1,4 @@
-from item import Item
+from model.item import Item
 
 
 def test_cheaper():
