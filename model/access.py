@@ -2,20 +2,20 @@ import json
 from secrets import blizzard_client_secret, blizzard_client_id
 import requests
 import pickle
-import time
+from model.token import Token
 
 
 class Access:
     def __init__(self):
         self.token = None
         try:
-            with open('token.pickle', 'rb') as f:
+            with open('../token.pickle', 'rb') as f:
                 self.token = pickle.load(f)
         except FileNotFoundError:
             self.token = self.get_access_token()
 
     def __del__(self):
-        with open('token.pickle', 'wb') as f:
+        with open('../token.pickle', 'wb') as f:
             pickle.dump(self.token, f)
 
     def get_auctions(self):
@@ -49,12 +49,3 @@ class Access:
         response_dict = json.loads(response.text)
         self.token = Token(response_dict['access_token'])
         return self.token
-
-
-class Token:
-    def __init__(self, access_token):
-        self.access_token = access_token
-        self.expiration = time.time() + (24*60*59)
-
-    def is_valid(self):
-        return time.time() < self.expiration
