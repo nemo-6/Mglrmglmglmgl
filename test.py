@@ -12,5 +12,5 @@ def test_cheaper():
     ]
     umbral_ink = Item(173058)
 
-    assert umbral_ink.price(test_cheaper_to_buy)[1] == 'AH'
-    assert umbral_ink.price(test_cheaper_to_craft)[1] == 'CRA'
+    assert umbral_ink.get_cheapest_price(test_cheaper_to_buy).source == 'AH'
+    assert umbral_ink.get_cheapest_price(test_cheaper_to_craft).source == 'CRA'
